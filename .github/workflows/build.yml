@@ -27,12 +27,26 @@ jobs:
       matrix:
         os: [windows-2022]
 
+    defaults:
+      run:
+        shell: msys2 {0}
+
     steps:
 
     - uses: actions/checkout@v3
 
+    - uses: msys2/setup-msys2@v2
+      with:
+        update: true
+        msystem: UCRT64
+        install: >-
+          base-devel
+          git
+          autoconf
+          automake
+          libtool
+        pacboy: >-
+          toolchain:p
+
     - run: |
-        export MSYS_NO_PATHCONV=1
-        export MSYS2_ARG_CONV_EXCL="*"
-        make build SHELL='C:\msys64\usr\bin\bash.exe'
-      shell: bash
+        make build
