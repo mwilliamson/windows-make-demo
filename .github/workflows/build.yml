@@ -19,3 +19,20 @@ jobs:
         export MSYS2_ARG_CONV_EXCL="*"
         make build
       shell: bash
+
+  msys2:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [windows-2022]
+
+    steps:
+
+    - uses: actions/checkout@v3
+
+    - run: |
+        export MSYS_NO_PATHCONV=1
+        export MSYS2_ARG_CONV_EXCL="*"
+        make build SHELL='C:\msys64\usr\bin\bash.exe'
+      shell: bash
